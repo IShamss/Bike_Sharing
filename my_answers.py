@@ -94,8 +94,8 @@ class NeuralNetwork(object):
         error = y-final_outputs # Output layer error is the difference between desired target and actual output.
         
         # TODO: Calculate the hidden layer's contribution to the error
-        output_error_term = error * final_outputs* (1-final_outputs)
-        hidden_error = np.dot(output_error_term,self.weights_hidden_to_output.T)
+        output_error_term = error 
+        hidden_error = np.dot(output_error_term[:,None],self.weights_hidden_to_output.T)
         
         # TODO: Backpropagated error terms - Replace these values with your calculations.
         
@@ -106,8 +106,7 @@ class NeuralNetwork(object):
         # Weight step (input to hidden)
         delta_weights_i_h +=hidden_error_term*X[:,None]
         # Weight step (hidden to output)
-        for i in range(len(output_error_term)):
-            delta_weights_h_o += output_error_term[i] *hidden_outputs[i]
+        delta_weights_h_o += output_error_term * hidden_outputs[:, None]
         return delta_weights_i_h, delta_weights_h_o
 
     def update_weights(self, delta_weights_i_h, delta_weights_h_o, n_records):
@@ -154,7 +153,7 @@ class NeuralNetwork(object):
 #########################################################
 # Set your hyperparameters here
 ##########################################################
-iterations = 100
-learning_rate = 0.1
-hidden_nodes = 2
+iterations = 5000
+learning_rate = 1
+hidden_nodes = 10
 output_nodes = 1
